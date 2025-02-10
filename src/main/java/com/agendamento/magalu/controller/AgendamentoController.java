@@ -1,14 +1,10 @@
 package com.agendamento.magalu.controller;
 
 import com.agendamento.magalu.business.AgendamentoService;
-import com.agendamento.magalu.controller.out.AgendamentoRecordOut;
 import com.agendamento.magalu.infra.entities.Agendamento;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +16,16 @@ public class AgendamentoController {
     @PostMapping
     public ResponseEntity<Agendamento> gravarAgendamento(@RequestBody AgendamentoService agendamento){
         return ResponseEntity.ok(agendamentoService.gravarAgendamento(agendamento));
+    }
+
+    @GetMapping
+    public ResponseEntity<Agendamento> buscarAgendamentoPorId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(agendamentoService.buscarAgendamentosPorId(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> cancelarAgendamento(@PathVariable("id") Long id){
+        agendamentoService.cancelarAgendamento(id);
+        return ResponseEntity.accepted().build();
     }
 }
